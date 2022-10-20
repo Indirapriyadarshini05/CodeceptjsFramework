@@ -100,6 +100,18 @@ async function jobTitlesUserAdd(username) {
   I.fillField(addnote, "User job title notes for reference");
 }
 
+async function attachingFile(value,inputfile){
+
+   let attach = '//div[text()="'+value+'"]/../..//input';
+   let input = '/input/'+inputfile+'';
+   await I.attachFile(attach,input);
+   I.wait(2);
+
+  // let attach = '//div[text()="Browse"]/../..//input';
+  // await I.attachFile(attach, "/input/importData.csv");
+
+}
+
 async function savebutton(value) {
   await I.click('//button[text()="' + value + '"]');
 }
@@ -182,6 +194,7 @@ async function handleDownloads(filename){
   // await I.wait(5);
 
 }
+/// how to attach file 
 
 
 
@@ -213,4 +226,5 @@ module.exports = {
   //checkAdult:checkAdult
   handleDownloads:handleDownloads,
   notes:notes,
+  attachingFile:attachingFile,
 };

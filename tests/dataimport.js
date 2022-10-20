@@ -13,8 +13,17 @@ Scenario("PIM", async ({ I, LP }) => {
   await I.submitbutton();
   await LP.job("Configuration ");
   await LP.jobDropdown("Data Import");
+  let dataImport="//div[@class='orangehrm-information-card-container']/../..//ul/li";
+  let text= await I.grabTextFromAll(dataImport);
+  console.log(text);
   await LP.handleDownloads(filename);
-  let templatedata=await I.fileImport(filename);
-  console.log(templatedata);
+  await I.fileImport(filename);
+  await I.wait(5);
+  await LP.attachingFile('Browse','importData.csv');
+  //await LP.attachingFile();
+  await I.wait(5);
+  await I.submitbutton();
  
 }).tag("import");
+
+

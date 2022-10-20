@@ -5,6 +5,7 @@ class Helpers extends Helper {
   async submitbutton (){
    await this.helpers.Playwright.click('//button[@type="submit"]');
   }
+
   
   async savebutton (fieldname,value){
     await this.helpers.Playwright.click("//h6[text()='"+fieldname+"']/..//button[text()='"+value+"']");
@@ -80,8 +81,10 @@ class Helpers extends Helper {
     await this.helpers.FileSystem.waitForFile(templatename, 5);
     await this.helpers.FileSystem.seeFile(templatename);
     let downloadedFile=await this.helpers.FileSystem.grabFileNames('/downloads/"'+templatename+'"');
-    console.log(downloadedFile);
     await this.helpers.FileSystem.waitForFile(templatename,5);
+    console.log(downloadedFile);
+   //return downloadedFile;
+   
     
   }
 }
