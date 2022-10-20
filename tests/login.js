@@ -140,6 +140,7 @@ Scenario("Pay Grades", async ({ I, LP, admin }) => {
   await I.see("Currencies");
   await I.addButton();
   await I.see("Add Currency");
+  console.log("hi");
   // await I.wait(2);
   await LP.dropdown("Currency", "INR - Indian Rupee");
   await LP.textfield("Minimum Salary", "1000");
