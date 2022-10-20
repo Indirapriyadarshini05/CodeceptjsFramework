@@ -129,9 +129,8 @@ async function checkbox(value) {
 async function tableAscendingDecending(value) {
   let sort = '//div[@class="oxd-table-header-sort"]';
   await I.click(sort);
-  await I.wait(2);
   await I.click('//span[text()="' + value + '"]');
- // I.wait(5);
+  await I.wait(5);
 
 }
 // async function griddata(value){
