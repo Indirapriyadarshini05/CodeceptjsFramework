@@ -35,6 +35,13 @@ class Helpers extends Helper {
   await this.helpers.Playwright.clearField('//label[text()="'+value+'"]/../..//input');
  }
 
+ async validationMessage(value){
+
+  let info =  await this.helpers.Playwright.grabTextFrom("//p[text()='"+value+"']");
+  return info;
+ // info.should.be.eql("No Records Found");
+ }
+
 
 
   async  calendarDate(fieldname, date) {

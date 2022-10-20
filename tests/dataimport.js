@@ -7,7 +7,6 @@ Scenario("PIM", async ({ I, LP }) => {
   
   let filename="importdata"+number+".csv";
   await I.amOnPage(`${process.env.URL}/auth/login`);
-  I.refreshPage();
   await I.waitForElement('//input[@name="username"]', 20);
   await LP.Login("Admin", "admin123");
   await I.submitbutton();
@@ -20,7 +19,6 @@ Scenario("PIM", async ({ I, LP }) => {
   await I.fileImport(filename);
   await I.wait(5);
   await LP.attachingFile('Browse','importData.csv');
-  //await LP.attachingFile();
   await I.wait(5);
   await I.submitbutton();
  

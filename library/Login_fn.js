@@ -74,11 +74,10 @@ async function jobDropdown(ddname) {
 async function textfield(fieldname, value) {
   I.fillField('//label[text()="' + fieldname + '"]/../..//input', value);
 }
-async function notes(fieldname, value) {
-  let notes ='//label[text()="'+fieldname+'"]/../..//textarea';
-  await I.clearField(notes);
-  await I.wait(5);
-  await I.fillField(notes, value);
+async function textArea(fieldname, value) {
+  let area ='//label[text()="'+fieldname+'"]/../..//textarea';
+  await I.clearField(area);
+  await I.fillField(area, value);
 }
 
 async function jobTitlesUserAdd(username) {
@@ -116,14 +115,14 @@ async function savebutton(value) {
   await I.click('//button[text()="' + value + '"]');
 }
 
-async function Successmessage(value) {
+// async function Successmessage(value) {
 
-  let success = await I.grabTextFrom('//p[text()="' + value + '"]');
-  return success;
-  // success.should.be.eql("Successfully Saved");
+//   let success = await I.grabTextFrom('//p[text()="' + value + '"]');
+//   return success;
+//   // success.should.be.eql("Successfully Saved");
 
 
-}
+// }
 async function titlesTable(value) {
   await I.waitForElement('//div[text()="' + value + '"]', 10);
   let val = await I.grabTextFrom('//div[text()="' + value + '"]');
@@ -194,11 +193,12 @@ async function handleDownloads(filename){
   // await I.wait(5);
 
 }
-/// how to attach file 
+
 
 
 
 module.exports = {
+  structureAdd:structureAdd,
   Login: Login,
   admin: admin,
   //records: records,
@@ -207,7 +207,7 @@ module.exports = {
   jobDropdown: jobDropdown,
   titlesTable: titlesTable,
   jobTitlesUserAdd: jobTitlesUserAdd,
-  Successmessage: Successmessage,
+  //Successmessage: Successmessage,
   //sucessfullyUpdated:sucessfullyUpdated,
   savebutton: savebutton,
   dropdown: dropdown,
@@ -225,6 +225,6 @@ module.exports = {
   //fileImport:fileImport,
   //checkAdult:checkAdult
   handleDownloads:handleDownloads,
-  notes:notes,
+  textArea:textArea,
   attachingFile:attachingFile,
 };
