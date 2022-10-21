@@ -13,6 +13,7 @@
     "allure-commandline": "^2.18.1",
     "chance": "^1.1.9",
     "codeceptjs": "^3.3.6",
+    "csvtojson": "^2.0.10",
     "datatables.net": "^1.12.1",
     "dotenv": "^16.0.3",
     "file-system": "^2.2.2",

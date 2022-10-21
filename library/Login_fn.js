@@ -198,7 +198,7 @@ async function handleDownloads(filename){
 
 
 module.exports = {
-  structureAdd:structureAdd,
+ //structureAdd:structureAdd,
   Login: Login,
   admin: admin,
   //records: records,
