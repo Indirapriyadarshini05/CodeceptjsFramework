@@ -188,11 +188,33 @@ async function handleDownloads(filename){
   await I.handleDownloads("downloads/"+filename+"");
   await I.waitForElement('//a[text()="Download"]',20);
   await I.click('//a[text()="Download"]');
-  await I.wait(10);
+  //await I.wait(10);
   // await I.fileImport(filename);
   // await I.wait(5);
 
 }
+
+async function grid(value){
+  path ="//div[contains(text(),'"+value+"')]";
+  add =""+path+"/../..//i[@class='oxd-icon bi-plus']";
+  pencil =''+path+'/../..//i[@class="oxd-icon bi-pencil-fill"]';
+  trash =""+path+"/../..//i[@class='oxd-icon bi-trash-fill']";
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.seeElement(add);
+ await I.seeElement(pencil);
+ await I.seeElement(trash);
+
+}
+
+async function gridadd(value){
+  path ="//div[contains(text(),'"+value+"')]";
+  add =""+path+"/../..//i[@class='oxd-icon bi-plus']";
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.click(add);
+
+
+}
+
 
 
 
@@ -227,4 +249,5 @@ module.exports = {
   handleDownloads:handleDownloads,
   textArea:textArea,
   attachingFile:attachingFile,
+  grid:grid,
 };

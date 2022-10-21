@@ -91,7 +91,6 @@ class Helpers extends Helper {
     await this.helpers.FileSystem.waitForFile(templatename,5);
     console.log(downloadedFile);
    //return downloadedFile;
-   
     
   }
 }

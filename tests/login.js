@@ -315,6 +315,8 @@ Scenario("Organization-Structure", async ({ I, LP, admin }) => {
    await I.submitbutton();
    let success= await I.validationMessage("Successfully Saved");
    success.should.be.eql("Successfully Saved");
+     await I.wait(5);
+   await LP.grid('Administration');
    
 }).tag("structure");
 
