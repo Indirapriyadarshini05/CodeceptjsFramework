@@ -2,7 +2,7 @@ const { I } = inject();
 
 async function Login(username, password) {
   await I.amOnPage(`${process.env.URL}/auth/login`);
-  //await I.resizeWindow(1366, 768);
+  await I.resizeWindow(1366, 768);
   await I.waitForElement('//input[@name="username"]', 20);
   await I.fillField('//input[@name="username"]', username);
   await I.fillField('//input[@placeholder="Password"]', password);
@@ -213,6 +213,7 @@ async function gridadd(value){
  await I.click(add);
 
 
+
 }
 
 
@@ -250,4 +251,5 @@ module.exports = {
   textArea:textArea,
   attachingFile:attachingFile,
   grid:grid,
+  gridadd:gridadd,
 };

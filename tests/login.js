@@ -72,7 +72,7 @@ Data(table)
       //await LP.dropdown('User Role','Admin')
       //await LP.dropdown('Status','Enabled')
       await I.submitbutton();
-      let message=await I.validationMessage('No Records Found')
+      let message = await I.validationMessage("No Records Found");
       message.should.be.eql("No Records Found");
     }
   )
@@ -91,7 +91,7 @@ Scenario("Add User in Job-Job Title", async ({ I, LP, admin }) => {
   await I.addButton();
   await LP.jobTitlesUserAdd(nameofuser);
   await LP.savebutton(" Save ");
- 
+
   let successmsg = await I.validationMessage("Successfully Saved");
   successmsg.should.be.eql("Successfully Saved");
   console.log(nameofuser);
@@ -226,13 +226,13 @@ Scenario("Organization-Generalshifts", async ({ I, LP, admin }) => {
   await LP.jobDropdown("General Information");
   await I.see("General Information");
   await I.checkBox();
-  await I.clearFieldaValue('Organization Name');
+  await I.clearFieldaValue("Organization Name");
   await LP.textfield("Organization Name", "OrangeHRM.PVT.LTD");
   await LP.textfield("Registration Number", number);
   await LP.textfield("Tax ID", id);
   await LP.textfield("Phone", number);
   await LP.textfield("Fax", number);
-  await I.clearFieldaValue('Email');
+  await I.clearFieldaValue("Email");
   await LP.textfield("Email", email);
   await LP.textfield("Address Street 1", address);
   await LP.textfield("Address Street 2", address);
@@ -240,10 +240,10 @@ Scenario("Organization-Generalshifts", async ({ I, LP, admin }) => {
   await LP.textfield("State/Province", state);
   await LP.textfield("Zip/Postal Code", zip);
   await LP.dropdown("Country", "United States");
-  await LP.textArea('Notes', sentence);
+  await LP.textArea("Notes", sentence);
   //await I.savebutton('General Information',' Save ');
-   await I.submitbutton();
-   let success= await I.validationMessage("Successfully Updated");
+  await I.submitbutton();
+  let success = await I.validationMessage("Successfully Updated");
   success.should.be.eql("Successfully Updated");
 }).tag("GI");
 
@@ -256,8 +256,8 @@ Scenario("Organization-Locations", async ({ I, LP, admin }) => {
   await LP.job("Organization ");
   await LP.jobDropdown("Locations");
   await I.see("Locations");
-   await I.addButton();
-   await I.see("Add Location");
+  await I.addButton();
+  await I.see("Add Location");
   await LP.textfield("Name", nameofuser);
   await LP.textfield("City", city);
   await LP.textfield("State/Province", state);
@@ -265,10 +265,10 @@ Scenario("Organization-Locations", async ({ I, LP, admin }) => {
   await LP.dropdown("Country", "United States");
   await LP.textfield("Phone", number);
   await LP.textfield("Fax", number);
-  await LP.textArea('Address', sentence);
-  await LP.textArea('Notes', sentence);
-   await I.submitbutton();
-   let success= await I.validationMessage("Successfully Saved");
+  await LP.textArea("Address", sentence);
+  await LP.textArea("Notes", sentence);
+  await I.submitbutton();
+  let success = await I.validationMessage("Successfully Saved");
   success.should.be.eql("Successfully Saved");
 }).tag("locations");
 
@@ -280,12 +280,12 @@ Scenario("Organization-Locations search", async ({ I, LP, admin }) => {
   await admin.admintab("Admin");
   await LP.job("Organization ");
   await LP.jobDropdown("Locations");
-  await I.see('Locations');
+  await I.see("Locations");
   await LP.textfield("Name", nameofuser);
   await LP.textfield("City", city);
   await LP.dropdown("Country", "United States");
-   //await I.savebutton('Locations',' Search ');
-   await I.submitbutton();
+  //await I.savebutton('Locations',' Search ');
+  await I.submitbutton();
   //  let message =await I.validationMessage('No Records Found')
   //  message.should.be.eql("No Records Found");
 }).tag("olocationsearch");
@@ -299,27 +299,32 @@ Scenario("Organization-Structure", async ({ I, LP, admin }) => {
   await admin.admintab("Admin");
   await LP.job("Organization ");
   await LP.jobDropdown("Structure");
-  await I.see('Organization Structure');
+  await I.see("Organization Structure");
   await I.wait(5);
   await I.checkBox();
   await I.wait(5);
   await I.addButton();
-  await I.see('Add Organization Unit');
+  await I.see("Add Organization Unit");
   await I.wait(5);
   await LP.textfield("Unit Id", id);
   await LP.textfield("Name", nameofuser);
-  await LP.textArea('Description', sentence);
-   let text = await I.grabTextFrom("//p[text()='This unit will be added under ']");
-   console.log(text);
-   text.should.be.eql('This unit will be added under OrangeHRM');
-   await I.submitbutton();
-   let success= await I.validationMessage("Successfully Saved");
-   success.should.be.eql("Successfully Saved");
-     await I.wait(5);
-   await LP.grid('Administration');
-   
+  await LP.textArea("Description", sentence);
+  let text = await I.grabTextFrom(
+    "//p[text()='This unit will be added under ']"
+  );
+  console.log(text);
+  text.should.be.eql("This unit will be added under OrangeHRM");
+  await I.submitbutton();
+  let success = await I.validationMessage("Successfully Saved");
+  success.should.be.eql("Successfully Saved");
+  await I.wait(5);
+  await LP.grid("Administration");
+  await LP.gridadd("Administration");
+  await LP.textfield("Unit Id", id);
+  await LP.textfield("Name", nameofuser);
+  await LP.textArea("Description", sentence);
+  await I.submitbutton();
 }).tag("structure");
-
 
 Scenario("Leave-Search Employee in Leave List", async ({ I, LP }) => {
   I.amOnPage(`${process.env.URL}/auth/login`);
@@ -337,7 +342,6 @@ Scenario("Leave-Search Employee in Leave List", async ({ I, LP }) => {
   await LP.leave_checkbox();
   await I.submitbutton();
 }).tag("leave");
-
 
 /*Scenario("Pim - Data Import", async ({ I, LP }) => {
   await I.amOnPage(`${process.env.URL}/auth/login`);
