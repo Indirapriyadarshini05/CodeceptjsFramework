@@ -11,33 +11,18 @@ async function Login(username, password) {
 async function dropdown(fieldname, role) {
   // Click on Userrole dropdown and selecting user role as ESS
   let urole =
-    "//label[text()='" +fieldname +"']/../..//div[@class='oxd-select-text-input']";
+    `//label[text()= ${fieldname}]/../..//div[@class='oxd-select-text-input']`;
   I.waitForElement("//label[text()='" + fieldname + "']");
   I.click(urole);
   I.click(
     "//label[text()='" + fieldname + "']/../..//span[text()='" + role + "']"
   );
 }
-/*async function clickadmin(value){
-  I.click("//span[text()='"+value+"']");
-  I.see("System Users");
-  I.addButton();
-  I.see("Add User");
-}*/
 
 async function names(fieldname,empName) {
   // Enter Employeename
   await I.fillField("//label[text()='"+fieldname+"']/../..//input", empName);
 }
-// async function Employeename(empName) {
-//   // Enter Employeename
-//   await I.fillField("//label[text()='Employee Name']/../..//input", empName);
-// }
-// async function username(nameofuser) {
-//   let uname =
-//     "//label[text()='Username']/../..//input[@class='oxd-input oxd-input--active']";
-//   await I.fillField(uname, nameofuser);
-// }
 
 async function admin(psdvalue) {
   // Enter Password,Confirm password
@@ -100,29 +85,16 @@ async function jobTitlesUserAdd(username) {
 }
 
 async function attachingFile(value,inputfile){
-
    let attach = '//div[text()="'+value+'"]/../..//input';
    let input = '/input/'+inputfile+'';
    await I.attachFile(attach,input);
-   I.wait(2);
-
-  // let attach = '//div[text()="Browse"]/../..//input';
-  // await I.attachFile(attach, "/input/importData.csv");
-
+   
 }
 
 async function savebutton(value) {
   await I.click('//button[text()="' + value + '"]');
 }
 
-// async function Successmessage(value) {
-
-//   let success = await I.grabTextFrom('//p[text()="' + value + '"]');
-//   return success;
-//   // success.should.be.eql("Successfully Saved");
-
-
-// }
 async function titlesTable(value) {
   await I.waitForElement('//div[text()="' + value + '"]', 10);
   let val = await I.grabTextFrom('//div[text()="' + value + '"]');
@@ -144,25 +116,14 @@ async function tableAscendingDecending(value) {
   await I.wait(5);
 
 }
-// async function griddata(value){
-// let uname='//div[@class="oxd-table-cell oxd-padding-cell"]//div[text()="'+value+'"]'
-// //await I.waitForElement(uname);
-// I.wait(10);
-// await I.grabTextFromAll(uname);
-// uname.should.be.eql(value);
-// }
 async function TimeSelection(fieldname,hours,ampm) {
-  // let timehour="//div[@role='alert']/../..//input[@class='oxd-input oxd-input--active oxd-time-hour-input-text']"
-  //let timeminute ='//div[@role="alert"]/../..//input[@class="oxd-input oxd-input--active oxd-time-minute-input-text"]'
-  let timehour =
-    '(//div[@class="oxd-time-hour-input"]/../..//input)[2]';
-  let timeminute =
-    '(//div[@class="oxd-time-hour-input"]/../..//input)[3]';
-    let uparrow='//i[@class="oxd-icon bi-chevron-up oxd-icon-button__icon oxd-time-minute-input-up"]';
+
+  let timehour ='(//div[@class="oxd-time-hour-input"]/../..//input)[2]';
+  let timeminute ='(//div[@class="oxd-time-hour-input"]/../..//input)[3]';
+  let uparrow='//i[@class="oxd-icon bi-chevron-up oxd-icon-button__icon oxd-time-minute-input-up"]';
    // let downarrow='//i[@class="oxd-icon bi-chevron-up oxd-icon-button__icon oxd-time-minute-input-up"]';
   await I.click("//label[text()='" + fieldname + "']/../..//input");
-  I.wait(5);
-  I.waitForElement(timehour,10);
+  await I.waitForElement(timehour,10);
   await I.click(timehour);
   await I.clearField(timehour);
   await I.waitForElement(timehour,10);
@@ -175,7 +136,7 @@ async function TimeSelection(fieldname,hours,ampm) {
   await I.click(uparrow);
  // I.click(downarrow)
  await I.forceClick("//label[text()='"+ampm+"']");
- I.wait(5);
+ //I.wait(5);
  
 }
 async function Duration(fieldname){
@@ -188,10 +149,6 @@ async function handleDownloads(filename){
   await I.handleDownloads("downloads/"+filename+"");
   await I.waitForElement('//a[text()="Download"]',20);
   await I.click('//a[text()="Download"]');
-  //await I.wait(10);
-  // await I.fileImport(filename);
-  // await I.wait(5);
-
 }
 
 async function grid(value){
@@ -206,13 +163,30 @@ async function grid(value){
 
 }
 
-async function gridadd(value){
+async function gridAdd(value){
   path ="//div[contains(text(),'"+value+"')]";
   add =""+path+"/../..//i[@class='oxd-icon bi-plus']";
  await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
  await I.click(add);
 
+}
 
+async function gridEdit(value){
+  path ="//div[contains(text(),'"+value+"')]";
+  pencil =''+path+'/../..//i[@class="oxd-icon bi-pencil-fill"]';
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.click(pencil);
+
+}
+
+async function gridTrash(value,fieldname){
+  path ="//div[contains(text(),'"+value+"')]";
+  trash =""+path+"/../..//i[@class='oxd-icon bi-trash-fill']";
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.click(trash);
+ await I.see('Are you Sure');
+ await  I.waitForElement("//button[text()='"+fieldname+"']",5);
+ await I.click("//button[text()='"+fieldname+"']");
 
 }
 
@@ -220,36 +194,30 @@ async function gridadd(value){
 
 
 
+
 module.exports = {
- //structureAdd:structureAdd,
   Login: Login,
   admin: admin,
-  //records: records,
   leave: leave,
   leave_checkbox:leave_checkbox,
   jobDropdown: jobDropdown,
   titlesTable: titlesTable,
   jobTitlesUserAdd: jobTitlesUserAdd,
-  //Successmessage: Successmessage,
-  //sucessfullyUpdated:sucessfullyUpdated,
   savebutton: savebutton,
   dropdown: dropdown,
-  //username: username,
-  // clickadmin:clickadmin,
- // Employeename: Employeename,
- names:names,
+  names:names,
   checkbox: checkbox,
   tableAscendingDecending: tableAscendingDecending,
-  //griddata:griddata,
   job: job,
   textfield: textfield,
   TimeSelection: TimeSelection,
   Duration:Duration,
-  //fileImport:fileImport,
-  //checkAdult:checkAdult
   handleDownloads:handleDownloads,
   textArea:textArea,
   attachingFile:attachingFile,
   grid:grid,
-  gridadd:gridadd,
+  gridAdd:gridAdd,
+  gridEdit:gridEdit,
+  gridTrash:gridTrash,
+
 };

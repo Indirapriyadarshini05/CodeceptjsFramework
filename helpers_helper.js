@@ -17,7 +17,7 @@ class Helpers extends Helper {
   }
 
   async checkBox(){
-
+    await this.helpers.Playwright.waitForElement("//input[@type='checkbox']");
     await this.helpers.Playwright.click("//input[@type='checkbox']");
   }
 
@@ -39,7 +39,7 @@ class Helpers extends Helper {
 
   let info =  await this.helpers.Playwright.grabTextFrom("//p[text()='"+value+"']");
   return info;
- // info.should.be.eql("No Records Found");
+
  }
 
 
@@ -90,7 +90,6 @@ class Helpers extends Helper {
     let downloadedFile=await this.helpers.FileSystem.grabFileNames('/downloads/"'+templatename+'"');
     await this.helpers.FileSystem.waitForFile(templatename,5);
     console.log(downloadedFile);
-   //return downloadedFile;
     
   }
 }

@@ -20,6 +20,7 @@ const state = chance.state({ territories: true, country: "us" });
 const zip = chance.zip({ plusfour: true });
 const sentence = chance.sentence({ words: 3 });
 const word = chance.word({ length: 5 });
+const Organization =chance.profession({rank: true})
 
 Feature("Login to OrangeHRM");
 
@@ -59,7 +60,7 @@ Data(table)
   .Scenario(
     "User search in Admin-System Users ",
     async ({ I, LP, current, admin }) => {
-      I.amOnPage(`${process.env.URL}/auth/login`);
+      await I.amOnPage(`${process.env.URL}/auth/login`);
       //I.waitForElement('//input[@name="username"]', 20);
       await LP.Login(process.env.login_Username, process.env.login_Password);
       await I.submitbutton();
@@ -91,7 +92,6 @@ Scenario("Add User in Job-Job Title", async ({ I, LP, admin }) => {
   await I.addButton();
   await LP.jobTitlesUserAdd(nameofuser);
   await LP.savebutton(" Save ");
-
   let successmsg = await I.validationMessage("Successfully Saved");
   successmsg.should.be.eql("Successfully Saved");
   console.log(nameofuser);
@@ -300,39 +300,50 @@ Scenario("Organization-Structure", async ({ I, LP, admin }) => {
   await LP.job("Organization ");
   await LP.jobDropdown("Structure");
   await I.see("Organization Structure");
-  await I.wait(5);
   await I.checkBox();
-  await I.wait(5);
   await I.addButton();
   await I.see("Add Organization Unit");
-  await I.wait(5);
   await LP.textfield("Unit Id", id);
-  await LP.textfield("Name", nameofuser);
+  await LP.textfield("Name", Organization);
   await LP.textArea("Description", sentence);
   let text = await I.grabTextFrom(
-    "//p[text()='This unit will be added under ']"
-  );
+    "//p[text()='This unit will be added under ']");
   console.log(text);
   text.should.be.eql("This unit will be added under OrangeHRM");
   await I.submitbutton();
   let success = await I.validationMessage("Successfully Saved");
   success.should.be.eql("Successfully Saved");
   await I.wait(5);
-  await LP.grid("Administration");
-  await LP.gridadd("Administration");
+  await LP.grid(Organization);
+// Add
+  await LP.gridAdd(Organization);
   await LP.textfield("Unit Id", id);
-  await LP.textfield("Name", nameofuser);
+  await LP.textfield("Name", word);
   await LP.textArea("Description", sentence);
   await I.submitbutton();
+  await I.wait(10);
+  // Edit
+  await LP.gridEdit(Organization);
+  await LP.textArea("Description", sentence);
+  await I.submitbutton();
+//Trash
+await I.wait(10);
+  await LP.gridTrash(Organization,' Yes, Delete ');            
+  
+  let validationMessage = await I.validationMessage("Successfully Deleted");
+  validationMessage.should.be.eql("Successfully Deleted");
 }).tag("structure");
+
+
+
 
 Scenario("Leave-Search Employee in Leave List", async ({ I, LP }) => {
   I.amOnPage(`${process.env.URL}/auth/login`);
   //I.waitForElement('//input[@name="username"]', 20);
   await LP.Login(process.env.login_Username, process.env.login_Password);
   await I.submitbutton();
-  I.click("//a[@class='oxd-main-menu-item']/../..//span[text()='Leave']");
-  I.see("Leave List");
+  await I.click("//a[@class='oxd-main-menu-item']/../..//span[text()='Leave']");
+  await I.see("Leave List");
   await I.calendarDate("From Date", "2021-10-10");
   await I.calendarDate("To Date", "2022-01-01");
   await LP.leave("Show Leave with Status", "Scheduled");
@@ -343,43 +354,4 @@ Scenario("Leave-Search Employee in Leave List", async ({ I, LP }) => {
   await I.submitbutton();
 }).tag("leave");
 
-/*Scenario("Pim - Data Import", async ({ I, LP }) => {
-  await I.amOnPage(`${process.env.URL}/auth/login`);
-  await I.waitForElement('//input[@name="username"]', 20);
-  await LP.Login(process.env.login_Username, process.env.login_Password);
-  I.wait(5);
-  await I.submitbutton();
-  await LP.job("Configuration ");
-  let title = '//a[text()="Data Import"]';
-  await I.click(title);
-  //await LP.jobDropdown('Data Import');
-  await I.handleDownloads("/downloads/importData.csv");
-  I.waitForElement('//a[text()="Download"]', 20);
-  await I.click('//a[text()="Download"]');
-  await I.fileImport();
-  await I.wait(10);
-  // await I.forceClick('//a[text()="Download"]');
-  // await I.wait(10);
-  // await  FileSystem.amInPath('output/downloads');
-  // await I.wait(5);
-  // await FileSystem.waitForFile('downloads/importData.csv', 5);
-  // await  FileSystem.seeFile('importData.csv');
 
-  // await I.seeFile('codecept.conf.js')
-  // await I.seeInThisFile('FileSystem');
-  // await I.dontSeeInThisFile("WebDriverIO");
-
-  /* let data=[];
-  new File(fileParts, importData, [I]);
-  let reader=new FileReader();
-  reader.onload=function(){
-    console.log(this.result);
-  }
-reader.readAsText(file)
-
-  // const download = await Promise.all([
-  // I.waitForElement('//a[text()="Download"]', {timeout:100000}),
-  // I.forceClick('//a[text()="Download"]'),
-  // console.log(download),
-  // ]);
-}).tag("pim");*/
