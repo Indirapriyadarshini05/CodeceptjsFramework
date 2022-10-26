@@ -190,11 +190,6 @@ async function gridTrash(value,fieldname){
 
 }
 
-
-
-
-
-
 module.exports = {
   Login: Login,
   admin: admin,
