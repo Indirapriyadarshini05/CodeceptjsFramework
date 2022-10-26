@@ -20,7 +20,7 @@ const state = chance.state({ territories: true, country: "us" });
 const zip = chance.zip({ plusfour: true });
 const sentence = chance.sentence({ words: 3 });
 const word = chance.word({ length: 5 });
-const Organization =chance.profession({rank: true})
+const Organization = chance.profession({ rank: true });
 
 Feature("Login to OrangeHRM");
 
@@ -307,32 +307,68 @@ Scenario("Organization-Structure", async ({ I, LP, admin }) => {
   await LP.textfield("Name", Organization);
   await LP.textArea("Description", sentence);
   let text = await I.grabTextFrom(
-    "//p[text()='This unit will be added under ']");
+    "//p[text()='This unit will be added under ']"
+  );
   console.log(text);
   text.should.be.eql("This unit will be added under OrangeHRM");
   await I.submitbutton();
   let success = await I.validationMessage("Successfully Saved");
   success.should.be.eql("Successfully Saved");
-  await I.wait(5);
+ // await I.wait(5);
   await LP.grid(Organization);
-// Add
+  // Add
   await LP.gridAdd(Organization);
   await LP.textfield("Unit Id", id);
   await LP.textfield("Name", word);
   await LP.textArea("Description", sentence);
   await I.submitbutton();
-  await I.wait(10);
+ await I.wait(10);
   // Edit
   await LP.gridEdit(Organization);
   await LP.textArea("Description", sentence);
   await I.submitbutton();
-//Trash
-await I.wait(10);
-  await LP.gridTrash(Organization,' Yes, Delete ');            
-  
+  //Trash
+  await I.wait(10);
+  await LP.gridTrash(Organization, " Yes, Delete ");
+
   let validationMessage = await I.validationMessage("Successfully Deleted");
   validationMessage.should.be.eql("Successfully Deleted");
 }).tag("structure");
+
+
+Scenario("Qualifications -Skills", async ({ I, LP, admin }) => {
+  await I.amOnPage(`${process.env.URL}/auth/login`);
+  await I.waitForElement('//input[@name="username"]', 20);
+  await LP.Login(process.env.login_Username, process.env.login_Password);
+  await I.submitbutton();
+  await admin.admintab("Admin");
+  await LP.job("Qualifications ");
+  await LP.jobDropdown("Skills");
+  await I.see("Skills");
+  await I.addButton();
+  await LP.textfield("Name", nameofuser);
+  await LP.textArea("Description", sentence);
+  await I.submitbutton();
+  let success = await I.validationMessage("Successfully Saved");
+  success.should.be.eql("Successfully Saved");
+
+  // Edit
+  await LP.gridEdit(nameofuser);
+  await LP.textArea("Description", sentence);
+  await I.submitbutton();
+  //Trash
+  await I.wait(10);
+  await LP.gridTrash(nameofuser, " Yes, Delete ");
+
+  let validationMessage = await I.validationMessage("Successfully Deleted");
+  validationMessage.should.be.eql("Successfully Deleted");
+
+ 
+}).tag("skills");
+
+
+
+
 
 
 
@@ -353,5 +389,3 @@ Scenario("Leave-Search Employee in Leave List", async ({ I, LP }) => {
   await LP.leave_checkbox();
   await I.submitbutton();
 }).tag("leave");
-
-

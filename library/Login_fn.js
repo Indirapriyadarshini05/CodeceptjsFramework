@@ -113,6 +113,7 @@ async function tableAscendingDecending(value) {
   let sort = '//div[@class="oxd-table-header-sort"]';
   await I.click(sort);
   await I.click('//span[text()="' + value + '"]');
+  //await I.click(`//span[text()=${value}]`)
   await I.wait(5);
 
 }
@@ -166,7 +167,7 @@ async function grid(value){
 async function gridAdd(value){
   path ="//div[contains(text(),'"+value+"')]";
   add =""+path+"/../..//i[@class='oxd-icon bi-plus']";
- await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",15);
  await I.click(add);
 
 }
@@ -174,7 +175,7 @@ async function gridAdd(value){
 async function gridEdit(value){
   path ="//div[contains(text(),'"+value+"')]";
   pencil =''+path+'/../..//i[@class="oxd-icon bi-pencil-fill"]';
- await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",20);
  await I.click(pencil);
 
 }
@@ -182,10 +183,10 @@ async function gridEdit(value){
 async function gridTrash(value,fieldname){
   path ="//div[contains(text(),'"+value+"')]";
   trash =""+path+"/../..//i[@class='oxd-icon bi-trash-fill']";
- await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",10);
+ await I.waitForElement("//p[text()='OrangeHRM']/../.."+path+"",20);
  await I.click(trash);
  await I.see('Are you Sure');
- await  I.waitForElement("//button[text()='"+fieldname+"']",5);
+ await  I.waitForElement("//button[text()='"+fieldname+"']",20);
  await I.click("//button[text()='"+fieldname+"']");
 
 }
